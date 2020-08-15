@@ -1,27 +1,27 @@
 #!/urs/bin/env python3
 
+"""supertictac.py - super-tictactoe console implementation"""
+
 import game
 
-"""supertictac.py - super-tictactoe console implementation"""
+
 def main():
     g = game.Game()
-    
+
     while not g.won:
-        print_game(g)  
+        print_game(g)
         nextMove = 0
 
-        while nextMove not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+        while nextMove not in g.validMoves:
             nextMove = input("Move? ")
-            if nextMove not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                print ("Invalid selection. (0-9)")
+            if nextMove not in g.validMoves:
+                print("Invalid selection. (0-9)")
                 nextMove = 0
-            
+
         g.play(nextMove)
     print_game(g)
     print(f"Congradulations! {g._whosMove} wins!")
 
-        
-    
 
 def print_game(g):
     board = g.get_board()
@@ -30,12 +30,14 @@ def print_game(g):
     print(headerString)
     print(boardString)
 
+
 def build_header_ascii(g):
-    finalOut = f"\nsupertictactoe | move: {g.currentMove} | active grid: {g.activeGrid}\n"
-    finalOut += "-" * 43
+    finalOut = f"\nsupertictactoe | move: {g.currentMove} | "
+    finalOut += "active grid: {g.activeGrid}\n" + "-" * 43
 
     return finalOut
-    
+
+
 def build_board_ascii(board):
     finalOut = ""
     for j in range(3):
@@ -47,13 +49,14 @@ def build_board_ascii(board):
             if i < 2:
                 line += " ---+---+---    ---+---+---    ---+---+---\n"
             finalOut += line
-        
+
         line = ""
         if j < 2:
             line += "\n"
         finalOut += line
 
     return finalOut
+
 
 if __name__ == "__main__":
     main()
